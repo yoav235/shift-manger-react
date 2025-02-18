@@ -5,8 +5,8 @@ import { DialogContent, DialogTitle, TextField, Button  } from '@mui/material';
 
 
 
-function Login() {
-    const [username, setUsername] = useState("");
+function Login({afterLogin}) {
+    const [username, setUsername] = useState(user?.name || "");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
@@ -14,6 +14,7 @@ function Login() {
     const handleLogin = async () => {
         if(username === "admin" && password === "admin"){
             alert("welcome " + username + ". You are logged in");
+            afterLogin({name: username});
             navigate("/home");
         }
         else{
