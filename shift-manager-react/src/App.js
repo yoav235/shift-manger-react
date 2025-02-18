@@ -25,7 +25,7 @@ function App() {
                             onSuccessUser={(user) => setUser(user)}
                             onSuccessShifts={onShiftsChange}/>
                     }/>
-                    <Route path={homePath} element={<Home user={user} onShiftChange={onShiftsChange}/>}/>
+                    <Route path={homePath} element={<Home user={user} onShiftChange={onShiftsChange} shifts={shifts}/>}/>
                     <Route path={signupPath} element={<Signup/>}/>
                 </Routes>
             </div>

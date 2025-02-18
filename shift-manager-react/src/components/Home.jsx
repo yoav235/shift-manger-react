@@ -4,7 +4,7 @@ import {TableContainer, TableCell, Table, TableBody, TableRow, Paper, TableHead}
 
 const daysArray = ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-function Home({user}) {
+function Home({user, shifts, onShiftChange}) {
     return (
         <div>
             <h1>Hello {user?.name || ""}, welcome back!</h1>
