@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DialogContent, DialogTitle, TextField, Button} from '@mui/material';
+import User from "../util/User";
 
 
 function Login({onSuccessUser, onSuccessShifts}) {
@@ -12,7 +13,7 @@ function Login({onSuccessUser, onSuccessShifts}) {
     const handleLogin = async () => {
         if (username === "admin" && password === "admin") {
             alert("welcome " + username + ". You are logged in");
-            onSuccessUser({name: username});
+            onSuccessUser(new User({name: username}));
             navigate("/home");
         } else {
             alert("Invalid username or password");

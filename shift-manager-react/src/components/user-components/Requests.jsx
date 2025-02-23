@@ -5,7 +5,7 @@ import {TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/ma
 const daysArray = ["", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 
-function Requests() {
+function Requests(user) {
     return (
         <div>
             <h1>Requests</h1>

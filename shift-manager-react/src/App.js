@@ -5,10 +5,11 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import {homePath, loginPath, signupPath} from "./constants";
+import User from "./util/User";
 
 
 function App() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => new User({}));
     const [shifts, setShifts] = useState([]);
 
     const onShiftsChange = (shifts) => {
