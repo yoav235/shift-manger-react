@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import {homePath, loginPath, signupPath} from "./constants";
-import User from "./util/User";
+import User from "./models/User";
 
 
 function App() {

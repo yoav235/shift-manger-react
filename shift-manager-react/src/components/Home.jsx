@@ -6,9 +6,16 @@ import Requests from "./user-components/Requests";
 
 function Home({user, shifts, onShiftChange}) {
     return (
-        <div>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
             <h1>Hello {user?.name || ""}, welcome back!</h1>
-            <Requests></Requests>
+            <Requests shifts={shifts} onShiftChange={onShiftChange}></Requests>
         </div>
     );
 }

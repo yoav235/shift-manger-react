@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DialogContent, DialogTitle, TextField, Button} from '@mui/material';
-import User from "../util/User";
+import User from "../models/User";
 
 
 function Login({onSuccessUser, onSuccessShifts}) {
