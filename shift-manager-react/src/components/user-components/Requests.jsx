@@ -48,16 +48,17 @@ function Requests({shifts, onShiftChange, onSave}) {
 
     const handleCheckboxChange = (day, shift) => {
         setEditedValues((prev) => {
-            const updatedDayShifts = prev[day] ? [...prev[day]] : [];
-            if (updatedDayShifts.includes(shift)) {
-                updatedDayShifts.splice(updatedDayShifts.indexOf(shift), 1); // Remove if exists
-            } else {
-                updatedDayShifts.push(shift); // Add if not exists
-            }
-            return { ...prev, [day]: updatedDayShifts };
-        });
+            const updatedDayShifts = prev[day] || [];
 
+            return {
+                ...prev,
+                [day]: updatedDayShifts.includes(shift)
+                    ? updatedDayShifts.filter((s) => s !== shift) // Remove if exists
+                    : [...updatedDayShifts, shift] // Add if not exists
+            };
+        });
     };
+
 
 
 

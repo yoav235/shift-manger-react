@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {DialogContent, DialogTitle, TextField, Button} from '@mui/material';
 import User from "../models/User";
+import Shifts from "../models/Shifts";
 
 
 function Login({onSuccessUser, onSuccessShifts}) {
@@ -14,6 +15,7 @@ function Login({onSuccessUser, onSuccessShifts}) {
         if (username === "admin" && password === "admin") {
             alert("welcome " + username + ". You are logged in");
             onSuccessUser(new User({name: username}));
+            onSuccessShifts(new Shifts({sunday: ["morning", "evening"]}));
             navigate("/home");
         } else {
             alert("Invalid username or password");
