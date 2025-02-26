@@ -1,10 +1,16 @@
 import React from "react";
-import {TableContainer, TableCell, Table, TableBody, TableRow, Paper, TableHead} from "@mui/material";
 import Requests from "./user-components/Requests";
 
 
 
 function Home({user, shifts, onShiftChange}) {
+
+
+    const handleReqSave = (shifts) => {
+        console.log(shifts);
+        alert("Saved");
+    }
+
     return (
         <div
             style={{
@@ -15,7 +21,7 @@ function Home({user, shifts, onShiftChange}) {
             }}
         >
             <h1>Hello {user?.name || ""}, welcome back!</h1>
-            <Requests shifts={shifts} onShiftChange={onShiftChange}></Requests>
+            <Requests shifts={shifts} onShiftChange={onShiftChange} onSave={handleReqSave}></Requests>
         </div>
     );
 }
