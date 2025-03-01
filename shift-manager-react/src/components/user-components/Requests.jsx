@@ -9,6 +9,7 @@ import {
     Table,
     Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
+import SaveIcon from '@mui/icons-material/Save';
 import Shifts from "../../models/Shifts";
 
 
@@ -16,7 +17,7 @@ const daysArray = [ "monday", "tuesday", "wednesday", "thursday", "friday", "sat
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
-function Requests({shifts, onShiftChange}) {
+function Requests({shifts, onShiftChange, onSave}) {
     const [editingCell, setEditingCell] = useState([]);
     const [editedValues, setEditedValues] = useState(shifts || new Shifts({}));
 
@@ -33,6 +34,9 @@ function Requests({shifts, onShiftChange}) {
         );
     };
 
+    const handleSave = () => {
+        onSave(editedValues);
+    }
 
     const toggleTable = () => {
         if (editingCell.length === 0) {
@@ -44,16 +48,17 @@ function Requests({shifts, onShiftChange}) {
 
     const handleCheckboxChange = (day, shift) => {
         setEditedValues((prev) => {
-            const updatedDayShifts = prev[day] ? [...prev[day]] : [];
-            if (updatedDayShifts.includes(shift)) {
-                updatedDayShifts.splice(updatedDayShifts.indexOf(shift), 1); // Remove if exists
-            } else {
-                updatedDayShifts.push(shift); // Add if not exists
-            }
-            return { ...prev, [day]: updatedDayShifts };
-        });
+            const updatedDayShifts = prev[day] || [];
 
+            return {
+                ...prev,
+                [day]: updatedDayShifts.includes(shift)
+                    ? updatedDayShifts.filter((s) => s !== shift) // Remove if exists
+                    : [...updatedDayShifts, shift] // Add if not exists
+            };
+        });
     };
+
 
 
 
@@ -61,7 +66,7 @@ function Requests({shifts, onShiftChange}) {
     return (
         <div>
             <h1>Requests</h1>
-            <TableContainer component={Paper} sx={{width: "200vh"}}>
+            <TableContainer component={Paper} sx={{width: "200vh", margin:"8px"}}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -99,7 +104,14 @@ function Requests({shifts, onShiftChange}) {
                         </TableRow>
                     </TableBody>
                 </Table>
+                <Button
+                    variant={"contained"}
+                    startIcon={<SaveIcon />}
+                    sx={{margin: "8px"}}
+                    onClick={handleSave}
+                >save</Button>
             </TableContainer>
+
         </div>
     );
 }

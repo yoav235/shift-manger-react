@@ -1,12 +1,25 @@
-import React from "react";
-import {TableContainer, TableCell, Table, TableBody, TableRow, Paper, TableHead} from "@mui/material";
+import React, {useEffect} from "react";
 import Requests from "./user-components/Requests";
-import Schdeule from "./user-components/Schdeule";
-import {UserContext} from "../context/userContext";
+import {Button} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {loginPath} from "../constants";
 
 
 
 function Home({user, shifts, onShiftChange}) {
+
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(shifts);
+    }, []);
+
+    const handleReqSave = (shifts) => {
+        console.log(shifts);
+        alert("Saved");
+    }
+
     return (
         <div
             style={{
@@ -17,9 +30,17 @@ function Home({user, shifts, onShiftChange}) {
             }}
         >
             <h1>Hello {user?.name || ""}, welcome back!</h1>
-            <Requests shifts={shifts} onShiftChange={onShiftChange}></Requests>
-            <Schdeule></Schdeule>
-
+            <div style={{alignItems: "left"}}>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        alert("Logged out")
+                        navigate(loginPath);
+                    }}
+                    sx={{margin: "10px", backgroundColor: "red"}}
+                >Log out</Button>
+            </div>
+            <Requests shifts={shifts} onShiftChange={onShiftChange} onSave={handleReqSave}></Requests>
         </div>
     );
 }
