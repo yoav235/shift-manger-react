@@ -1,12 +1,15 @@
 
 
 class User {
+    ;
     constructor({
-                name = '',
-                token = '',
+                    username = '',
+                password = '',
+                isManager = false
             } ) {
-        this.name = name;
-        this.token = token;
+        this.username = username;
+        this.password = password;
+        this.isManager = isManager;
     }
 }
 

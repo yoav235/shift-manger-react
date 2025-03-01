@@ -1,13 +1,14 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import Requests from "./user-components/Requests";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {loginPath} from "../constants";
+import {ShiftsContext, UserContext} from "../App";
 
 
-
-function Home({user, shifts, onShiftChange}) {
-
+function Home() {
+    const {shifts} = useContext(ShiftsContext);
+    const {user} = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ function Home({user, shifts, onShiftChange}) {
                     sx={{margin: "10px", backgroundColor: "red"}}
                 >Log out</Button>
             </div>
-            <Requests shifts={shifts} onShiftChange={onShiftChange} onSave={handleReqSave}></Requests>
+            <Requests  onShiftChange={() => {}} onSave={handleReqSave}></Requests>
         </div>
     );
 }

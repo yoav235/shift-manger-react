@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     TableBody,
     TableCell,
@@ -11,16 +11,22 @@ import {
 } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import Shifts from "../../models/Shifts";
+import {ShiftsContext} from "../../App";
 
 
 const daysArray = [ "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
-function Requests({shifts, onShiftChange, onSave}) {
+function Requests({onShiftChange, onSave}) {
+    const {shifts} = useContext(ShiftsContext)
     const [editingCell, setEditingCell] = useState([]);
-    const [editedValues, setEditedValues] = useState(shifts || new Shifts({}));
+    const [editedValues, setEditedValues] = useState(new Shifts({}));
 
+    useEffect(() => {
+        setEditedValues(shifts);
+        console.log(editedValues);
+    }, []);
 
     useEffect(() => {
         onShiftChange(editedValues);

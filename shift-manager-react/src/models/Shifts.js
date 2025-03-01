@@ -2,7 +2,7 @@ import User from "./User";
 
 class Shifts  {
     constructor(
-        userId = '',
+        {userId = '',
         shifts = {
                     sunday: [],
                     monday: [],
@@ -11,7 +11,7 @@ class Shifts  {
                     thursday: [],
                     friday: [],
                     saturday: []
-                }) {
+                }}) {
         this.userId = userId
         this.shifts = shifts;
     }
