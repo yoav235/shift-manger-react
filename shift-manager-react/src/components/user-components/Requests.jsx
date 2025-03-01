@@ -7,7 +7,7 @@ import {
     TableRow,
     Paper,
     Table,
-    Checkbox, List, ListItem, ListItemText, FormControlLabel, Button
+    Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
 import Shifts from "../../models/Shifts";
 
