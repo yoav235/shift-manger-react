@@ -13,8 +13,9 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(shifts);
-    }, []);
+        console.log("Home shifts: ", shifts);
+        console.log("Home user: ", user);
+    }, [user, shifts]);
 
     const handleReqSave = (shifts) => {
         console.log(shifts);
@@ -30,7 +31,7 @@ function Home() {
                 justifyContent: "center",
             }}
         >
-            <h1>Hello {user?.name || ""}, welcome back!</h1>
+            <h1>Hello {user?.username || ""}, welcome back!</h1>
             <div style={{alignItems: "left"}}>
                 <Button
                     variant="contained"

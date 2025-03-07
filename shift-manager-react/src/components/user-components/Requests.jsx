@@ -14,18 +14,19 @@ import Shifts from "../../models/Shifts";
 import {ShiftsContext} from "../../App";
 
 
-const daysArray = [ "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
 function Requests({onShiftChange, onSave}) {
     const {shifts} = useContext(ShiftsContext)
     const [editingCell, setEditingCell] = useState([]);
-    const [editedValues, setEditedValues] = useState(new Shifts({}));
+    const [editedValues, setEditedValues] = useState(shifts);
 
     useEffect(() => {
         setEditedValues(shifts);
-        console.log(editedValues);
+        console.log("requested shifts: ", shifts);
+        console.log("editedValues: ", editedValues);
     }, []);
 
     useEffect(() => {
@@ -72,7 +73,7 @@ function Requests({onShiftChange, onSave}) {
     return (
         <div>
             <h1>Requests</h1>
-            <TableContainer component={Paper} sx={{width: "200vh", margin:"8px"}}>
+            <TableContainer component={Paper} sx={{width: "80vw", margin:"8px"}}>
                 <Table>
                     <TableHead>
                         <TableRow>
