@@ -1,8 +1,9 @@
 import React, {useContext, useEffect} from "react";
 import Requests from "./user-components/Requests";
+import Schdeule from "./user-components/Schdeule";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {loginPath} from "../constants";
+import {loginPath, mockShifts} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
 
 
@@ -21,7 +22,7 @@ function Home() {
         console.log("saved shifts: ", shifts);
         alert("Saved: " + shifts);
         setShifts(shifts);
-        localStorage.setItem("shifts", JSON.stringify(shifts));
+        mockShifts.find((shift) => shift.userId === user.username).shifts = shifts;
     }
 
     return (
@@ -45,6 +46,7 @@ function Home() {
                 >Log out</Button>
             </div>
             <Requests  onShiftChange={() => {}} onSave={handleReqSave}></Requests>
+            <Schdeule></Schdeule>
         </div>
     );
 }

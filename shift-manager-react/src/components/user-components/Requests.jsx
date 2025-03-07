@@ -12,10 +12,10 @@ import {
 import SaveIcon from '@mui/icons-material/Save';
 import Shifts from "../../models/Shifts";
 import {ShiftsContext} from "../../App";
+import {daysArray, shiftsArray} from "../../constants";
 
 
-const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-const shiftsArray = ["morning", "middle", "evening", "night", "other"];
+
 
 
 function Requests({onShiftChange, onSave}) {

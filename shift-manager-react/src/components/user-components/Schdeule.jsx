@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import {
     TableBody,
     TableCell,
@@ -9,14 +9,16 @@ import {
     Table,
     Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
+import {daysArray, mockShifts, shiftsArray} from "../../constants";
+import {ShiftsContext} from "../../App";
 
-const daysArray = [ "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 
 function Schedule() {
 
-
-
+    useEffect(() => {
+        console.log("Schedule shifts: ", mockShifts);
+    }, []);
 
 
 
@@ -31,6 +33,22 @@ function Schedule() {
                             <TableCell></TableCell>
                             {daysArray?.map((day, i) => <TableCell key={i}>{day}</TableCell>)}
                         </TableRow>
+                            {shiftsArray?.map((shift, i) =>
+                        <TableRow key={i}>
+                            <TableCell>{shift}</TableCell>
+                            {daysArray?.map((day, i) =>
+                                <TableCell key={i}>
+                                    {mockShifts.map((userShift) => {
+                                        if (userShift.shifts[day] === shift) {
+                                            return <div>{userShift.userId}</div>
+                                        }
+                                        return "nothing"
+                                    })}
+                                </TableCell>
+
+                            )}
+                        </TableRow>
+                        )}
                     </TableHead>
                     <TableBody></TableBody>
 

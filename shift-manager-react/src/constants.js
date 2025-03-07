@@ -64,6 +64,9 @@ const mockShifts = [
     })
 ];
 
+const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
-export { homePath, loginPath, signupPath, mockShifts, mockUsers};
+
+export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray};
