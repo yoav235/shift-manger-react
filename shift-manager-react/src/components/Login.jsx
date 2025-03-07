@@ -25,7 +25,7 @@ function Login({onSuccess}) {
 
     const login = async () => {
 
-        if(handleLogin(onSuccess, mockUsers.find((user) => (user.username === username && user.password === password)), new User({username, password, isManager: false}))) {
+        if(await handleLogin(onSuccess, mockUsers.find((user) => (user.username === username && user.password === password)), new User({username, password, isManager: false}))) {
             setIsLogged(true)
         } else {
             alert("Invalid username or password");

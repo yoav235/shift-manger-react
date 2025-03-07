@@ -7,7 +7,7 @@ import {ShiftsContext, UserContext} from "../App";
 
 
 function Home() {
-    const {shifts} = useContext(ShiftsContext);
+    const {shifts, setShifts} = useContext(ShiftsContext);
     const {user} = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -18,8 +18,10 @@ function Home() {
     }, [user, shifts]);
 
     const handleReqSave = (shifts) => {
-        console.log(shifts);
-        alert("Saved");
+        console.log("saved shifts: ", shifts);
+        alert("Saved: " + shifts);
+        setShifts(shifts);
+        localStorage.setItem("shifts", JSON.stringify(shifts));
     }
 
     return (

@@ -27,7 +27,7 @@ function Requests({onShiftChange, onSave}) {
         setEditedValues(shifts);
         console.log("requested shifts: ", shifts);
         console.log("editedValues: ", editedValues);
-    }, []);
+    }, [shifts]);
 
     useEffect(() => {
         onShiftChange(editedValues);
@@ -43,7 +43,8 @@ function Requests({onShiftChange, onSave}) {
 
     const handleSave = () => {
         onSave(editedValues);
-    }
+    };
+
 
     const toggleTable = () => {
         if (editingCell.length === 0) {
@@ -55,16 +56,18 @@ function Requests({onShiftChange, onSave}) {
 
     const handleCheckboxChange = (day, shift) => {
         setEditedValues((prev) => {
-            const updatedDayShifts = prev[day] || [];
-
-            return {
-                ...prev,
-                [day]: updatedDayShifts.includes(shift)
-                    ? updatedDayShifts.filter((s) => s !== shift) // Remove if exists
-                    : [...updatedDayShifts, shift] // Add if not exists
+            const updatedShifts = {
+                ...prev.shifts, // Copy existing shifts object
+                [day]: prev.shifts[day]?.includes(shift)
+                    ? prev.shifts[day].filter((s) => s !== shift) // Remove shift
+                    : [...(prev.shifts[day] || []), shift] // Add shift
             };
+
+            return new Shifts({ userId: prev.userId, shifts: updatedShifts });
         });
     };
+
+
 
 
 
@@ -93,7 +96,7 @@ function Requests({onShiftChange, onSave}) {
                                                     <FormControlLabel
                                                         control={
                                                             <Checkbox
-                                                                checked={editedValues[day]?.includes(shift) || false}
+                                                                checked={editedValues.shifts[day]?.includes(shift) || false}
                                                                 onChange={() => handleCheckboxChange(day, shift)}
                                                             />
                                                         }
@@ -102,8 +105,8 @@ function Requests({onShiftChange, onSave}) {
                                                 </ListItem>
                                             ))}
                                         </List>
-                                        ) : ( editedValues[day]?.length > 0
-                                        ? editedValues[day].join(", ")
+                                        ) : ( editedValues.shifts[day]?.length > 0
+                                        ? editedValues.shifts[day].join(", ")
                                         : "No shifts")}
 
                                 </TableCell>)
