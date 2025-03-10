@@ -9,7 +9,7 @@ import {
     Table,
     Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
-import {daysArray, mockShifts, shiftsArray} from "../../constants";
+import {daysArray, shiftsArray, schedule} from "../../constants";
 import {ShiftsContext} from "../../App";
 
 
@@ -17,7 +17,7 @@ import {ShiftsContext} from "../../App";
 function Schedule() {
 
     useEffect(() => {
-        console.log("Schedule shifts: ", mockShifts);
+        console.log("Schedule shifts: ", schedule);
     }, []);
 
 
@@ -38,11 +38,11 @@ function Schedule() {
                             <TableCell>{shift}</TableCell>
                             {daysArray?.map((day, i) =>
                                 <TableCell key={i}>
-                                    {mockShifts.map((userShift) => {
-                                        if (userShift.shifts[day] === shift) {
-                                            return <div>{userShift.userId}</div>
+                                    {schedule.map((userShift) => {
+                                        if (userShift.day === day && userShift.shifts[shift]) {
+                                            return userShift.shifts[shift]?.join(", ");
                                         }
-                                        return "nothing"
+                                        return ""
                                     })}
                                 </TableCell>
 

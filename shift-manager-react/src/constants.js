@@ -64,9 +64,19 @@ const mockShifts = [
     })
 ];
 
-const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const schedule = [
+    { day: "Sunday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
+    { day: "Monday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
+    { day: "Tuesday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } },
+    { day: "Wednesday", shifts: { morning: ["david"], middle: ["charlie"], evening: ["bob"], night: ["alice"], other: [] } },
+    { day: "Thursday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
+    { day: "Friday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
+    { day: "Saturday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } }
+];
+
+const daysArray = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
 
-export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray};
+export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule};
