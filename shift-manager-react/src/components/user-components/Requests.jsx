@@ -96,7 +96,7 @@ function Requests({onShiftChange, onSave}) {
                                                     <FormControlLabel
                                                         control={
                                                             <Checkbox
-                                                                checked={editedValues.shifts[day]?.includes(shift) || false}
+                                                                checked={editedValues.shifts[day]?.includes(shift)}
                                                                 onChange={() => handleCheckboxChange(day, shift)}
                                                             />
                                                         }
@@ -107,7 +107,9 @@ function Requests({onShiftChange, onSave}) {
                                         </List>
                                         ) : ( editedValues.shifts[day]?.length > 0
                                         ? editedValues.shifts[day].join(", ")
-                                        : "No shifts")}
+                                        : "No shifts")
+                                    }
+
 
                                 </TableCell>)
                             }

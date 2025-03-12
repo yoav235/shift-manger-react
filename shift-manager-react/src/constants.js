@@ -65,16 +65,16 @@ const mockShifts = [
 ];
 
 const schedule = [
-    { day: "Sunday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
-    { day: "Monday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
-    { day: "Tuesday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } },
-    { day: "Wednesday", shifts: { morning: ["david"], middle: ["charlie"], evening: ["bob"], night: ["alice"], other: [] } },
-    { day: "Thursday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
-    { day: "Friday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
-    { day: "Saturday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } }
+    { day: "sunday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
+    { day: "monday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
+    { day: "tuesday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } },
+    { day: "wednesday", shifts: { morning: ["david"], middle: ["charlie"], evening: ["bob"], night: ["alice"], other: [] } },
+    { day: "thursday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
+    { day: "friday", shifts: { morning: ["bob"], middle: ["david"], evening: ["alice"], night: ["charlie"], other: [] } },
+    { day: "saturday", shifts: { morning: ["charlie"], middle: ["alice"], evening: ["david"], night: ["bob"], other: [] } }
 ];
 
-const daysArray = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
 
