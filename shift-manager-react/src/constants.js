@@ -77,6 +77,14 @@ const schedule = [
 const daysArray = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const shiftsArray = ["morning", "middle", "evening", "night", "other"];
 
+const updateSchedule = (schedule, worker) => {
+    schedule.map((workDay) => {
+        worker.shifts.shifts[workDay.day].map((shift) => {
+            if(!(workDay.shifts[shift]?.includes(worker.userId))) {
+                workDay.shifts[shift]?.push(worker.userId);
+            }
+        })
+    })
+}
 
-
-export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule};
+export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule, updateSchedule};

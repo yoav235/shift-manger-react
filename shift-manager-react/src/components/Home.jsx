@@ -3,7 +3,7 @@ import Requests from "./user-components/Requests";
 import Schdeule from "./user-components/Schdeule";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {loginPath, mockShifts} from "../constants";
+import {loginPath, mockShifts, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
 
 
@@ -23,6 +23,7 @@ function Home() {
         alert("Saved: " + shifts);
         setShifts(shifts);
         mockShifts.find((shift) => shift.userId === user.username).shifts = shifts;
+        updateSchedule(schedule, mockShifts.find((shift) => shift.userId === user.username));
     }
 
     return (

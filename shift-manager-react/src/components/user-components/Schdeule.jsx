@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, { useEffect} from "react";
 import {
     TableBody,
     TableCell,
@@ -7,10 +7,8 @@ import {
     TableRow,
     Paper,
     Table,
-    Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
 import {daysArray, shiftsArray, schedule} from "../../constants";
-import {ShiftsContext} from "../../App";
 
 
 
@@ -18,7 +16,7 @@ function Schedule() {
 
     useEffect(() => {
         console.log("Schedule shifts: ", schedule);
-    }, []);
+    }, [schedule]);
 
 
 
