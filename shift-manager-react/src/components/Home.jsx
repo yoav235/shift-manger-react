@@ -1,7 +1,7 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Requests from "./user-components/Requests";
 import Schdeule from "./user-components/Schdeule";
-import {Button} from "@mui/material";
+import { AppBar, Tabs, Tab, Button, Box } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {loginPath, mockShifts, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
@@ -10,7 +10,7 @@ import {ShiftsContext, UserContext} from "../App";
 function Home() {
     const {shifts, setShifts} = useContext(ShiftsContext);
     const {user} = useContext(UserContext);
-
+    const [tabIndex, setTabIndex] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,29 +26,32 @@ function Home() {
         updateSchedule(schedule, mockShifts.find((shift) => shift.userId === user.username));
     }
 
+    const handleLogout = () => {
+        alert("Logged out");
+        navigate(loginPath);
+    };
+
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
-            <h1>Hello {user?.username || ""}, welcome back!</h1>
-            <div style={{alignItems: "left"}}>
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        alert("Logged out")
-                        navigate(loginPath);
-                    }}
-                    sx={{margin: "10px", backgroundColor: "red"}}
-                >Log out</Button>
-            </div>
-            <Requests  onShiftChange={() => {}} onSave={handleReqSave}></Requests>
-            <Schdeule></Schdeule>
-        </div>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 2 }}>
+                    <Tabs value={tabIndex} onChange={(e, newIndex) => setTabIndex(newIndex)} textColor="inherit">
+                        <Tab label="Requests" />
+                        <Tab label="Schedule" />
+                    </Tabs>
+                    <Button color="inherit" onClick={handleLogout}>
+                        Logout
+                    </Button>
+                </Box>
+            </AppBar>
+            <Box sx={{ p: 3}}>
+                <h2>Hello {user?.username || ""}, welcome back!</h2>
+                {tabIndex === 0 && (
+                    <Requests onShiftChange={() => {}} onSave={handleReqSave} />
+                )}
+                {tabIndex === 1 && <Schdeule />}
+            </Box>
+        </Box>
     );
 }
 

@@ -74,9 +74,16 @@ function Requests({onShiftChange, onSave}) {
 
 
     return (
-        <div>
+        <div className={"requests"}>
             <h1>Requests</h1>
-            <TableContainer component={Paper} sx={{width: "80vw", margin:"8px"}}>
+            <TableContainer
+                component={Paper}
+                sx={{
+                    width: editingCell.length === 0 ? "80vw" : "100vw",
+                    margin: editingCell.length === 0 ? "8px auto" : "0",
+                    transition: "width 0.3s ease",
+                }}
+            >
                 <Table>
                     <TableHead>
                         <TableRow>
