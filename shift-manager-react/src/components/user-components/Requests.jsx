@@ -9,6 +9,7 @@ import {
     Table,
     Checkbox, List, ListItem, FormControlLabel, Button
 } from "@mui/material";
+import Collapse from '@mui/material/Collapse';
 import SaveIcon from '@mui/icons-material/Save';
 import Shifts from "../../models/Shifts";
 import {ShiftsContext} from "../../App";
@@ -79,9 +80,10 @@ function Requests({onShiftChange, onSave}) {
             <TableContainer
                 component={Paper}
                 sx={{
-                    width: editingCell.length === 0 ? "80vw" : "100vw",
-                    margin: editingCell.length === 0 ? "8px auto" : "0",
+                    width: editingCell.length < 3 ? "80vw" : "100%",
+                    margin: editingCell.length < 3 ? "8px auto" : "0px",
                     transition: "width 0.3s ease",
+                    overflowX: "hidden"
                 }}
             >
                 <Table>
@@ -96,10 +98,10 @@ function Requests({onShiftChange, onSave}) {
                             <TableCell>available shifts</TableCell>
                             {daysArray?.map((day, i) =>
                                 <TableCell key={i} onDoubleClick={() => handleDoubleClick(day)}>
-                                    {editingCell.includes(day) ? (
-                                        <List>
+                                    <Collapse in={editingCell.includes(day)} timeout="auto" unmountOnExit>
+                                        <List dense>
                                             {shiftsArray?.map((shift, index) => (
-                                                <ListItem key={index}>
+                                                <ListItem key={index} sx={{ paddingY: 0 }}>
                                                     <FormControlLabel
                                                         control={
                                                             <Checkbox
@@ -112,12 +114,11 @@ function Requests({onShiftChange, onSave}) {
                                                 </ListItem>
                                             ))}
                                         </List>
-                                        ) : ( editedValues.shifts[day]?.length > 0
-                                        ? editedValues.shifts[day].join(", ")
-                                        : "No shifts")
-                                    }
-
-
+                                    </Collapse>
+                                    {!editingCell.includes(day) &&
+                                        (editedValues.shifts[day]?.length > 0
+                                            ? editedValues.shifts[day].join(", ")
+                                            : "No shifts")}
                                 </TableCell>)
                             }
                         </TableRow>
