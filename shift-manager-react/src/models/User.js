@@ -3,11 +3,11 @@
 class User {
     ;
     constructor({
-                    username = '',
+                    email = '',
                 password = '',
                 isManager = false
             } ) {
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.isManager = isManager;
     }
