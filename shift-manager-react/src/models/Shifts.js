@@ -2,6 +2,7 @@
 class Shifts  {
     constructor(
         {userId = '',
+            name = '',
         shifts = {
                     sunday: [],
                     monday: [],
@@ -12,6 +13,7 @@ class Shifts  {
                     saturday: []
                 }}) {
         this.userId = userId
+        this.name = name
         this.shifts = shifts;
     }
 }

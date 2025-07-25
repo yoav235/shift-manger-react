@@ -1,7 +1,7 @@
-export const handleLogin = (onSuccess, isTrue, user) => {
+export const handleLogin = (onSuccess, isTrue, user, shifts) => {
 
     if (isTrue !== undefined) {
-        onSuccess(user)
+        onSuccess(user, shifts)
         return true;
     } else {
         alert("Invalid username or password");

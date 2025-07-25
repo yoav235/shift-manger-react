@@ -4,7 +4,7 @@ import {API_URL} from "../constants";
 
 export default async function fetchShifts(shiftId) {
     try {
-        const response = await fetch(`${API_URL}/shifts//getShifts`, {
+        const response = await fetch(`${API_URL}/shifts/getShifts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
-import {homePath, loginPath, mockShifts, signupPath} from "./constants";
+import {homePath, loginPath, signupPath} from "./constants";
 import User from "./models/User";
 import Shifts from "./models/Shifts";
 
@@ -19,7 +19,7 @@ function App() {
     const onChange = (user, shifts) => {
         alert("welcome " + user.username + ". You are logged in");
         setUser(new User({username: user.username, password: user.password, isManager: false}));
-        setShifts(new Shifts({userId: user.username, shifts:shifts}));
+        setShifts(new Shifts({userId: shifts[0].shiftId,name: shifts[0].name, shifts:shifts[0].shifts}));
     }
 
     return (

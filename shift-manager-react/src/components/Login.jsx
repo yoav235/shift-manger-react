@@ -2,8 +2,10 @@ import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {DialogContent, DialogTitle, TextField, Button} from '@mui/material';
 import User from "../models/User";
+import Shifts from "../models/Shifts";
 import {handleLogin} from "../API";
 import loginUser from "../util/user_util";
+import fetchShifts from "../util/shifts_util";
 
 
 
@@ -25,7 +27,10 @@ function Login({onSuccess}) {
 
     const login = async () => {
         const user = new User({username, password, isManager: false});
-        if(handleLogin(onSuccess, await loginUser(user), user)) {
+        const isTrue = await loginUser(user);
+        const shifts = await fetchShifts(isTrue._id);
+        console.log("Fetched shifts: ", shifts);
+        if(handleLogin(onSuccess, isTrue, user, shifts)) {
             setIsLogged(true)
         } else {
             alert("Invalid username or password");
