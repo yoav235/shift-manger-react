@@ -16,11 +16,10 @@ function App() {
     const [shifts, setShifts] = useState([]);
 
 
-    const onChange = (user) => {
+    const onChange = (user, shifts) => {
         alert("welcome " + user.username + ". You are logged in");
         setUser(new User({username: user.username, password: user.password, isManager: false}));
-        setShifts(new Shifts({userId: user.username,
-            shifts:mockShifts.find(shift => shift.userId === user.username).shifts}));
+        setShifts(new Shifts({userId: user.username, shifts:shifts}));
     }
 
     return (

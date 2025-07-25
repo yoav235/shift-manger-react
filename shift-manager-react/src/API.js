@@ -1,6 +1,6 @@
-export const handleLogin = async (onSuccess, isTrue, user) => {
+export const handleLogin = (onSuccess, isTrue, user) => {
 
-    if (isTrue) {
+    if (isTrue !== undefined) {
         onSuccess(user)
         return true;
     } else {

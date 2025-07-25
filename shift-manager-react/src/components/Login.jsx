@@ -1,9 +1,9 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {DialogContent, DialogTitle, TextField, Button} from '@mui/material';
 import User from "../models/User";
-import {mockShifts, mockUsers} from "../constants";
 import {handleLogin} from "../API";
+import loginUser from "../util/user_util";
 
 
 
@@ -24,8 +24,8 @@ function Login({onSuccess}) {
     }, [isLogged, navigate]);
 
     const login = async () => {
-
-        if(await handleLogin(onSuccess, mockUsers.find((user) => (user.username === username && user.password === password)), new User({username, password, isManager: false}))) {
+        const user = new User({username, password, isManager: false});
+        if(handleLogin(onSuccess, await loginUser(user), user)) {
             setIsLogged(true)
         } else {
             alert("Invalid username or password");
