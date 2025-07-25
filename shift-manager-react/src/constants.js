@@ -4,10 +4,7 @@ import Shifts from "./models/Shifts";
 const homePath = "/home";
 const loginPath = "/";
 const signupPath = "/signup";
-
-
-const API_URI = "https://shift-manager-backend-y3kz.onrender.com";
-
+const API_URL = "https://shift-manager-backend-y3kz.onrender.com/api"
 
 const mockUsers = [
     new User({ username: "alice", password: "pass123", isManager: false }),
@@ -90,4 +87,4 @@ const updateSchedule = (schedule, worker) => {
     })
 }
 
-export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule, updateSchedule, API_URI};
+export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule, updateSchedule, API_URL};
