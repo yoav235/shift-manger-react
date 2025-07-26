@@ -6,12 +6,7 @@ const loginPath = "/";
 const signupPath = "/signup";
 const API_URL = "https://shift-manager-backend-y3kz.onrender.com/api"
 
-const mockUsers = [
-    new User({ username: "alice", password: "pass123", isManager: false }),
-    new User({ username: "bob", password: "adminpass", isManager: true }),
-    new User({ username: "charlie", password: "charlie123", isManager: false }),
-    new User({ username: "david", password: "davidpass", isManager: false }),
-];
+
 
 const mockShifts = [
     new Shifts({
@@ -87,4 +82,4 @@ const updateSchedule = (schedule, worker) => {
     })
 }
 
-export { homePath, loginPath, signupPath, mockShifts, mockUsers, daysArray, shiftsArray, schedule, updateSchedule, API_URL};
+export { homePath, loginPath, signupPath, mockShifts, daysArray, shiftsArray, schedule, updateSchedule, API_URL};

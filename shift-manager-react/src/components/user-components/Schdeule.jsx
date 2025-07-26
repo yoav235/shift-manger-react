@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
     TableBody,
     TableCell,
@@ -9,14 +9,65 @@ import {
     Table,
 } from "@mui/material";
 import {daysArray, shiftsArray, schedule} from "../../constants";
+import Scheduler from "../../models/Scheduler";
+import {fetchSchedule} from "../../util/schedule_util";
 
 
 
 function Schedule() {
+    const [scheduler, setScheduler] = useState(new Scheduler("", {
+        sunday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        monday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        tuesday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        wednesday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        thursday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        friday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        },
+        saturday: {
+            morning: [],
+            middle: [],
+            evening: [],
+            night: []
+        }
+    }));
 
     useEffect(() => {
-        console.log("Schedule shifts: ", schedule);
-    }, [schedule]);
+        const fetchData = async () => {
+            const fetchedSchedule = await fetchSchedule();
+            const scheduleData = new Scheduler(fetchedSchedule.date, fetchedSchedule.shifts);
+            setScheduler(scheduleData);
+        };
+        fetchData().then(() => {console.log("Schedule shifts: ", scheduler);});
+    }, [scheduler]);
 
 
 
@@ -31,20 +82,16 @@ function Schedule() {
                             <TableCell></TableCell>
                             {daysArray?.map((day, i) => <TableCell key={i}>{day}</TableCell>)}
                         </TableRow>
-                            {shiftsArray?.map((shift, i) =>
+                            {shiftsArray.map((day, i) =>
                         <TableRow key={i}>
-                            <TableCell>{shift}</TableCell>
+                            <TableCell>{day}</TableCell>
                             {daysArray?.map((day, i) =>
-                                <TableCell key={i}>
-                                    {schedule.map((userShift) => {
-                                        if (userShift.day === day && userShift.shifts[shift]) {
-                                            return userShift.shifts[shift]?.join(", ");
-                                        }
-                                        return ""
-                                    })}
-                                </TableCell>
+                                shiftsArray.map((shift, i) =>
+                                    <TableCell key={i}>
+                                        {scheduler.schedule[day][shift]?.join(", ") || ""}
 
-                            )}
+                                    </TableCell>
+                                ))}
                         </TableRow>
                         )}
                     </TableHead>
