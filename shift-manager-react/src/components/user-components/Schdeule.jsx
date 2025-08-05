@@ -8,7 +8,7 @@ import {
     Paper,
     Table,
 } from "@mui/material";
-import {daysArray, shiftsArray, schedule} from "../../constants";
+import {daysArray, shiftsArray} from "../../constants";
 import Scheduler from "../../models/Scheduler";
 import {fetchSchedule} from "../../util/schedule_util";
 
@@ -80,29 +80,28 @@ function Schedule() {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            {daysArray?.map((day, i) => <TableCell key={i}>{day}</TableCell>)}
+                            {daysArray.map((day, i) => (
+                                <TableCell key={i}>{day}</TableCell>
+                            ))}
                         </TableRow>
-                            {shiftsArray.map((day, i) =>
-                        <TableRow key={i}>
-                            <TableCell>{day}</TableCell>
-                            {daysArray?.map((day, i) =>
-                                shiftsArray.map((shift, i) =>
-                                    <TableCell key={i}>
-                                        {scheduler.schedule[day][shift]?.join(", ") || ""}
-
+                    </TableHead>
+                    <TableBody>
+                        {shiftsArray.map((shift, i) => (
+                            <TableRow key={i}>
+                                <TableCell>{shift}</TableCell>
+                                {daysArray.map((day, j) => (
+                                    <TableCell key={j}>
+                                        {scheduler.schedule[day]?.[shift]?.join(", ") || ""}
                                     </TableCell>
                                 ))}
-                        </TableRow>
-                        )}
-                    </TableHead>
-                    <TableBody></TableBody>
-
-
-
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
             </TableContainer>
         </div>
     );
+
 }
 
 export default Schedule;
