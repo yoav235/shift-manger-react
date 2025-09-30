@@ -4,9 +4,11 @@ import {
     TableCell,
     TableContainer,
     TableHead,
+    CircularProgress,
     TableRow,
     Paper,
     Table,
+    Box
 } from "@mui/material";
 import {daysArray, shiftsArray} from "../../constants";
 import Scheduler from "../../models/Scheduler";
@@ -59,18 +61,26 @@ function Schedule() {
             night: []
         }
     }));
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             const fetchedSchedule = await fetchSchedule();
             const scheduleData = new Scheduler(fetchedSchedule.date, fetchedSchedule.shifts);
             setScheduler(scheduleData);
+            setLoading(false);
         };
         fetchData().then(() => {console.log("Schedule shifts: ", scheduler);});
+
     }, [scheduler]);
 
-
-
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
+                <CircularProgress/>
+            </Box>
+        );
+    }
 
     return (
         <div>
