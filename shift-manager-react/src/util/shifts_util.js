@@ -22,3 +22,23 @@ export default async function fetchShifts(shiftId) {
         return undefined;
     }
 }
+
+export async function fetchAllShifts() {
+    try {
+        const response = await fetch(`${API_URL}/shifts/getAllShifts`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        return data.data;
+    }
+    catch (error) {
+        console.error('Error fetching shifts:', error);
+        return undefined;
+    }
+}
