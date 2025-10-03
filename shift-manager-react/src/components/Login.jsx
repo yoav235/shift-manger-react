@@ -26,8 +26,10 @@ function Login({onSuccess}) {
     }, [isLogged, navigate]);
 
     const login = async () => {
-        const user = new User({username, password, isManager: false});
-        const isTrue = await loginUser(user);
+        const isTrue = await loginUser(username, password);
+        const user = new User({username: isTrue.email,
+                                                                            password: isTrue.password,
+                                                                            isManager: isTrue.isManager});
         const shifts = await fetchShifts(isTrue._id);
         console.log("Fetched shifts: ", shifts);
         if(handleLogin(onSuccess, isTrue, user, shifts)) {

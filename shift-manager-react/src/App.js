@@ -16,9 +16,10 @@ function App() {
     const [shifts, setShifts] = useState([]);
 
 
+
     const onChange = (user, shifts) => {
         alert("welcome " + user.username + ". You are logged in");
-        setUser(new User({username: user.username, password: user.password, isManager: false}));
+        setUser(new User({username: user.username, password: user.password, isManager: user.isManager}));
         setShifts(new Shifts({userId: shifts[0].shiftId,name: shifts[0].name, shifts:shifts[0].shifts}));
     }
 

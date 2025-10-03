@@ -3,14 +3,14 @@ import {API_URL} from "../constants";
 
 
 
-export default async function loginUser(user) {
+export default async function loginUser(username, password) {
     try {
         const response = await fetch(API_URL + '/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email: user.username, password: user.password} )
+            body: JSON.stringify({email: username, password: password} )
         });
         if(!response.ok){
             throw new Error('Network response was not ok ' + response.statusText);
