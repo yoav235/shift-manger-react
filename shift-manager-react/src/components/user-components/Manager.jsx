@@ -7,9 +7,9 @@ import {
 } from "@mui/material";
 import { daysArray, shiftsArray } from "../../constants";
 
-function shiftsDictionary(){
+async function shiftsDictionary(){
     const shiftsDict = {};
-    const shifts = fetchAllShifts();
+    const shifts = await fetchAllShifts();
     shifts.forEach(shift => {
         shiftsDict[shift.name] = shift;
     });
@@ -23,8 +23,14 @@ function Manager() {
     const [activeCell, setActiveCell] = useState(null);
 
     useEffect(() => {
-        setShiftsDict(shiftsDictionary());
-        fetchSchedule().then(data => setSchedule(data));
+        async function loadData() {
+            const dict = await shiftsDictionary();
+            setShiftsDict(dict);
+
+            const sched = await fetchSchedule();
+            setSchedule(Array.isArray(sched) ? sched : []); // ensure it's an array
+        }
+        loadData();
     }, []);
 
     const allUsers = useMemo(() => {
