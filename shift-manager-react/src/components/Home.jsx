@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import Requests from "./user-components/Requests";
 import Schdeule from "./user-components/Schdeule";
-import Manager from "./Manager";
+import Manager from "./user-components/Manager";
 import { AppBar, Tabs, Tab, Button, Box } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {loginPath, schedule, updateSchedule} from "../constants";
