@@ -68,7 +68,9 @@ function Requests({onShiftChange, onSave}) {
         });
     };
 
-
+    if (!editedValues) {
+        return <h2>Loading...</h2>;
+    }
 
 
 
@@ -137,3 +139,4 @@ function Requests({onShiftChange, onSave}) {
 }
 
 export default Requests;
+

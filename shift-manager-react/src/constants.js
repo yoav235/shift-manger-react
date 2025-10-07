@@ -7,57 +7,57 @@ const signupPath = "/signup";
 const API_URL = "https://shift-manager-backend-y3kz.onrender.com/api"
 
 
-
-const mockShifts = [
-    new Shifts({
-        userId: "alice",
-        shifts: {
-            sunday: [],
-            monday: ["morning"],
-            tuesday: [],
-            wednesday: ["evening"],
-            thursday: [],
-            friday: ["night"],
-            saturday: []
-        }
-    }),
-    new Shifts({
-        userId: "bob",
-        shifts: {
-            sunday: [],
-            monday: [],
-            tuesday: ["morning", "night"],
-            wednesday: [],
-            thursday: ["middle"],
-            friday: [],
-            saturday: ["evening"]
-        }
-    }),
-    new Shifts({
-        userId: "charlie",
-        shifts: {
-            sunday: ["night"],
-            monday: [],
-            tuesday: [],
-            wednesday: ["morning"],
-            thursday: [],
-            friday: ["afternoon"],
-            saturday: []
-        }
-    }),
-    new Shifts({
-        userId: "david",
-        shifts: {
-            sunday: [],
-            monday: ["middle", "evening"],
-            tuesday: [],
-            wednesday: [],
-            thursday: [],
-            friday: [],
-            saturday: ["morning"]
-        }
-    })
-];
+//
+// const mockShifts = [
+//     new Shifts({
+//         userId: "alice",
+//         shifts: {
+//             sunday: [],
+//             monday: ["morning"],
+//             tuesday: [],
+//             wednesday: ["evening"],
+//             thursday: [],
+//             friday: ["night"],
+//             saturday: []
+//         }
+//     }),
+//     new Shifts({
+//         userId: "bob",
+//         shifts: {
+//             sunday: [],
+//             monday: [],
+//             tuesday: ["morning", "night"],
+//             wednesday: [],
+//             thursday: ["middle"],
+//             friday: [],
+//             saturday: ["evening"]
+//         }
+//     }),
+//     new Shifts({
+//         userId: "charlie",
+//         shifts: {
+//             sunday: ["night"],
+//             monday: [],
+//             tuesday: [],
+//             wednesday: ["morning"],
+//             thursday: [],
+//             friday: ["afternoon"],
+//             saturday: []
+//         }
+//     }),
+//     new Shifts({
+//         userId: "david",
+//         shifts: {
+//             sunday: [],
+//             monday: ["middle", "evening"],
+//             tuesday: [],
+//             wednesday: [],
+//             thursday: [],
+//             friday: [],
+//             saturday: ["morning"]
+//         }
+//     })
+// ];
 
 const schedule = [
     { day: "sunday", shifts: { morning: ["alice"], middle: ["bob"], evening: ["charlie"], night: ["david"], other: [] } },
@@ -82,4 +82,4 @@ const updateSchedule = (schedule, worker) => {
     })
 }
 
-export { homePath, loginPath, signupPath, mockShifts, daysArray, shiftsArray, schedule, updateSchedule, API_URL};
+export { homePath, loginPath, signupPath, daysArray, shiftsArray, schedule, updateSchedule, API_URL};

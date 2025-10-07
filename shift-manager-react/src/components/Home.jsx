@@ -6,15 +6,33 @@ import { AppBar, Tabs, Tab, Button, Box } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {loginPath, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
+import Cookies from 'js-cookie';
+
 
 
 function Home() {
     const {shifts, setShifts} = useContext(ShiftsContext);
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const [tabIndex, setTabIndex] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!user) {
+            const cookieUser = Cookies.get("user");
+            const parsedUser = cookieUser ? JSON.parse(cookieUser) : null;
+            if (cookieUser) {
+                setUser(parsedUser);
+            } else {
+                navigate(loginPath);
+            }
+        }
+        if (!shifts) {
+            const cookieShifts = Cookies.get("shifts");
+            const parsedShifts = cookieShifts ? JSON.parse(cookieShifts)[0] : null;
+            if (parsedShifts) {
+                setShifts(parsedShifts);
+            }
+        }
         console.log("Home shifts: ", shifts);
         console.log("Home user: ", user);
     }, [user, shifts]);
@@ -28,6 +46,8 @@ function Home() {
 
     const handleLogout = () => {
         alert("Logged out");
+        Cookies.remove("user");
+        Cookies.remove("shifts");
         navigate(loginPath);
     };
 
@@ -47,13 +67,19 @@ function Home() {
                 </Box>
             </AppBar>
             <Box sx={{ p: 3 }}>
-                <h2>Hello {user?.username || ""}, welcome back!</h2>
-                {user?.isManager ? (
-                    <Manager />
+                {(!user || !shifts) ? (
+                    <h2>Loading...</h2>
                 ) : (
                     <>
-                        {tabIndex === 0 && <Requests onShiftChange={() => {}} onSave={handleReqSave} />}
-                        {tabIndex === 1 && <Schdeule />}
+                        <h2>Hello {shifts?.name || ""}, welcome back!</h2>
+                        {user?.isManager ? (
+                            <Manager />
+                        ) : (
+                            <>
+                                {tabIndex === 0 && <Requests onShiftChange={() => {}} onSave={handleReqSave} />}
+                                {tabIndex === 1 && <Schdeule />}
+                            </>
+                        )}
                     </>
                 )}
             </Box>

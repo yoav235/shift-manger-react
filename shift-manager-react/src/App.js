@@ -12,13 +12,13 @@ export const UserContext = createContext();
 export const ShiftsContext = createContext();
 
 function App() {
-    const [user, setUser] = useState(() => new User({}));
-    const [shifts, setShifts] = useState([]);
+    const [user, setUser] = useState(null);
+    const [shifts, setShifts] = useState(null);
 
 
 
     const onChange = (user, shifts) => {
-        alert("welcome " + user.username + ". You are logged in");
+        alert("welcome " + shifts[0].name + ". You are logged in");
         setUser(new User({username: user.username, password: user.password, isManager: user.isManager}));
         setShifts(new Shifts({userId: shifts[0].shiftId,name: shifts[0].name, shifts:shifts[0].shifts}));
     }
