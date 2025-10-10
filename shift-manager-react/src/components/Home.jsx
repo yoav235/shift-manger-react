@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import Requests from "./user-components/Requests";
 import Schdeule from "./user-components/Schdeule";
 import Manager from "./user-components/Manager";
+import ScheduleMaker from "./user-components/ScheduleMaker";
 import { AppBar, Tabs, Tab, Button, Box } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {loginPath, schedule, updateSchedule} from "../constants";
@@ -55,7 +56,12 @@ function Home() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 2 }}>
-                    {!user?.isManager && (
+                    {user?.isManager ? (
+                        <Tabs value={tabIndex} onChange={(e, newIndex) => setTabIndex(newIndex)} textColor="inherit">
+                            <Tab label="Requests" />
+                            <Tab label="Schedule Maker" />
+                        </Tabs>
+                    ) : (
                         <Tabs value={tabIndex} onChange={(e, newIndex) => setTabIndex(newIndex)} textColor="inherit">
                             <Tab label="Requests" />
                             <Tab label="Schedule" />
@@ -73,7 +79,14 @@ function Home() {
                     <>
                         <h2>Hello {shifts?.name || ""}, welcome back!</h2>
                         {user?.isManager ? (
-                            <Manager />
+                            <>
+                                {tabIndex === 0 && <Manager />}
+                                {tabIndex === 1 && (
+                                    <Box sx={{ mt: 2 }}>
+                                        <ScheduleMaker />
+                                    </Box>
+                                )}
+                            </>
                         ) : (
                             <>
                                 {tabIndex === 0 && <Requests onShiftChange={() => {}} onSave={handleReqSave} />}
