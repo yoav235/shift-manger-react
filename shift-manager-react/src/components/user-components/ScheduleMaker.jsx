@@ -13,9 +13,12 @@ import {
     TableHead,
     TableRow,
     Typography,
+    Button,
 } from "@mui/material";
 import { daysArray, shiftsArray } from "../../constants";
 import { fetchAllShifts } from "../../util/shifts_util";
+import { fetchSchedule } from "../../util/schedule_util";
+import { createSchedule } from "../../util/schedule_post_util";
 
 // Build an empty grid shaped as schedule[day][shift] = []
 function makeEmptyGrid() {
@@ -26,6 +29,39 @@ function makeEmptyGrid() {
             grid[day][shift] = [];
         });
     });
+    return grid;
+}
+
+// Normalize various backend schedule shapes into the grid shape { [day]: { [shift]: string[] } }
+function normalizeToGrid(raw) {
+    const grid = makeEmptyGrid();
+
+    if (!raw) return grid;
+
+    // Case A: array of { day, shifts: { shift: string[] } }
+    if (Array.isArray(raw)) {
+        raw.forEach((entry) => {
+            const day = entry?.day;
+            const shifts = entry?.shifts || {};
+            if (!day || !grid[day]) return;
+            shiftsArray.forEach((shift) => {
+                const arr = shifts?.[shift];
+                grid[day][shift] = Array.isArray(arr) ? arr : [];
+            });
+        });
+        return grid;
+    }
+
+    // Case B: object with { shifts: { [day]: { [shift]: string[] } } } or directly { [day]: { ... } }
+    const map = (raw && typeof raw === "object" && raw.shifts && typeof raw.shifts === "object") ? raw.shifts : raw;
+    daysArray.forEach((day) => {
+        const d = map?.[day] || {};
+        shiftsArray.forEach((shift) => {
+            const arr = d?.[shift];
+            grid[day][shift] = Array.isArray(arr) ? arr : [];
+        });
+    });
+
     return grid;
 }
 
@@ -41,6 +77,9 @@ function ScheduleMaker() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeCell, setActiveCell] = useState({ day: null, shift: null });
     const menuOpen = Boolean(anchorEl);
+
+    // Saving state
+    const [saving, setSaving] = useState(false);
 
     // Load available workers from backend
     useEffect(() => {
@@ -64,6 +103,24 @@ function ScheduleMaker() {
                     setWorkers([]);
                     setWorkerDict({});
                 }
+            }
+        })();
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    // Load current schedule from backend and normalize into grid
+    useEffect(() => {
+        let mounted = true;
+        (async () => {
+            try {
+                const raw = await fetchSchedule();
+                const grid = normalizeToGrid(raw);
+                if (mounted) setSchedule(grid);
+            } catch (e) {
+                // keep empty grid on failure
+                // console.error("Failed to load schedule", e);
             }
         })();
         return () => {
@@ -109,9 +166,27 @@ function ScheduleMaker() {
         return Array.isArray(arr) ? arr : [];
     }, [activeCell, schedule]);
 
+    const handleSave = async () => {
+        try {
+            setSaving(true);
+            await createSchedule(schedule, new Date());
+            alert("Schedule saved successfully");
+        } catch (e) {
+            console.error(e);
+            alert("Failed to save schedule");
+        } finally {
+            setSaving(false);
+        }
+    };
+
     return (
         <Box sx={{ p: 2 }}>
-            <Typography variant="h5" sx={{ mb: 2 }}>Schedule Maker</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                <Typography variant="h5">Schedule Maker</Typography>
+                <Button variant="contained" onClick={handleSave} disabled={saving}>
+                    {saving ? 'Saving…' : 'Save schedule'}
+                </Button>
+            </Box>
 
             <TableContainer component={Paper}>
                 <Table size="small">
