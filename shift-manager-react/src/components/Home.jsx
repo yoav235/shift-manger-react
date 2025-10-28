@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {loginPath, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
 import Cookies from 'js-cookie';
+import { addShift } from "../util/shifts_util";
 
 
 
@@ -38,11 +39,29 @@ function Home() {
         console.log("Home user: ", user);
     }, [user, shifts]);
 
-    const handleReqSave = (shifts) => {
-        console.log("saved shifts: ", shifts);
-        alert("Saved: " + shifts);
-        setShifts(shifts);
-        updateSchedule(schedule, shifts);
+    const handleReqSave = async (shifts) => {
+        try {
+            console.log("saved shifts: ", shifts);
+            
+            // Transform shifts data to match backend schema
+            const shiftData = {
+                shiftId: shifts.shiftId,  // Unique identifier
+                name: shifts.name,       // User's name
+                shifts: shifts.shifts,   // Shifts object with day arrays
+            };
+            
+            // Save to database
+            await addShift(shiftData);
+            
+            // Update local state
+            setShifts(shifts);
+            // updateSchedule(schedule, shifts);
+            
+            alert("Shifts saved successfully!");
+        } catch (error) {
+            console.error("Failed to save shifts:", error);
+            alert("Failed to save shifts. Please try again.");
+        }
     }
 
     const handleLogout = () => {

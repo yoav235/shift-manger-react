@@ -64,7 +64,7 @@ function Requests({onShiftChange, onSave}) {
                     : [...(prev.shifts[day] || []), shift] // Add shift
             };
 
-            return new Shifts({ userId: prev.userId, shifts: updatedShifts });
+            return new Shifts({ shiftId: prev.shiftId, name: prev.name, shifts: updatedShifts });
         });
     };
 
