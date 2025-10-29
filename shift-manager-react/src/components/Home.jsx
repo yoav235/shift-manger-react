@@ -95,7 +95,7 @@ function Home() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="sticky">
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", px: 2 }}>
                     {user?.isManager ? (
                         <Tabs value={tabIndex} onChange={(e, newIndex) => setTabIndex(newIndex)} textColor="inherit">
@@ -108,7 +108,7 @@ function Home() {
                             <Tab label="Schedule" />
                         </Tabs>
                     )}
-                    <Button color="inherit" onClick={handleLogout}>
+                    <Button color="error" variant="contained" onClick={handleLogout}>
                         Logout
                     </Button>
                 </Box>
