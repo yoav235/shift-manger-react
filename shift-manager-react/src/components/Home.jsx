@@ -9,6 +9,8 @@ import {loginPath, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
 import Cookies from 'js-cookie';
 import { addShift } from "../util/shifts_util";
+import fetchShifts from "../util/shifts_util";
+import Shifts from "../models/Shifts";
 
 
 
@@ -45,16 +47,36 @@ function Home() {
             
             // Transform shifts data to match backend schema
             const shiftData = {
-                shiftId: shifts.shiftId,  // Unique identifier
+                shiftId: shifts.userId,  // Unique identifier (userId is the shiftId in Shifts model)
                 name: shifts.name,       // User's name
                 shifts: shifts.shifts,   // Shifts object with day arrays
+                userId: shifts.userId    // Used by backend for database lookup
             };
             
             // Save to database
             await addShift(shiftData);
             
-            // Update local state
-            setShifts(shifts);
+            // Reload shifts from database to get the latest data
+            console.log("Reloading shifts from database after save...");
+            const fetchedShifts = await fetchShifts(shifts.userId);
+            
+            if (fetchedShifts && fetchedShifts[0]) {
+                const updatedShifts = new Shifts({
+                    shiftId: fetchedShifts[0].shiftId,
+                    name: fetchedShifts[0].name,
+                    shifts: fetchedShifts[0].shifts
+                });
+                // Update context with fresh data from database
+                setShifts(updatedShifts);
+                // Update cookies
+                Cookies.set('shifts', JSON.stringify(fetchedShifts), { expires: 1 });
+                console.log("Shifts reloaded from database:", updatedShifts);
+            } else {
+                // Fallback to local state if fetch fails
+                alert("Failed to reload shifts from database");
+                setShifts(shifts);
+            }
+            
             // updateSchedule(schedule, shifts);
             
             alert("Shifts saved successfully!");
