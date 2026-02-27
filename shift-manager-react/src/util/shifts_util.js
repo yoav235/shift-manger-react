@@ -43,18 +43,36 @@ export async function fetchAllShifts() {
     }
 }
 
-export async function addShift(shifts) {
+/**
+ * Adds or updates a user's shifts in the database.
+ * 
+ * @param {Object} shiftData - The shift data object containing:
+ *   - shiftId: {string} - Unique identifier (typically the user's email)
+ *   - name: {string} - The user's name
+ *   - shifts: {Object} - Object with keys for each day of the week (sunday, monday, tuesday, wednesday, thursday, friday, saturday)
+ *                        Each key contains an array of shift preferences
+ *   - userId: {string} - User's email used for database lookup
+ * 
+ * @returns {Promise<Object>} The saved shift data from the server
+ */
+export async function addShift(shiftData) {
     try {
         const response = await fetch(`${API_URL}/shifts/addShift`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(shifts)
+            body: JSON.stringify(shiftData)
         });
-    }
-    catch (error) {
-        console.error('Error adding shift:', error);
-        return undefined;
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        console.log("Shift added/updated:", data);
+        return data.data;
+    } catch (error) {
+        console.error('Error adding/updating shift:', error);
+        throw error;
     }
 }
+

@@ -1,7 +1,7 @@
 
 class Shifts  {
     constructor(
-        {userId = '',
+        {shiftId = '',
             name = '',
         shifts = {
                     sunday: [],
@@ -21,7 +21,7 @@ class Shifts  {
                     friday: null,
                     saturday: null
                 }}) {
-        this.userId = userId
+        this.shiftId = shiftId
         this.name = name
         this.shifts = shifts;
         this.otherShiftHours = otherShiftHours;

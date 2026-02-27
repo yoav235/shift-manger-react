@@ -20,7 +20,7 @@ function App() {
     const onChange = (user, shifts) => {
         alert("welcome " + shifts[0].name + ". You are logged in");
         setUser(new User({username: user.username, password: user.password, isManager: user.isManager}));
-        setShifts(new Shifts({userId: shifts[0].shiftId,name: shifts[0].name, shifts:shifts[0].shifts}));
+        setShifts(new Shifts({shiftId: shifts[0].shiftId,name: shifts[0].name, shifts:shifts[0].shifts}));
     }
 
     return (

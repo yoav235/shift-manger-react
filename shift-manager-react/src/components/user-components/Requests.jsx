@@ -113,17 +113,7 @@ function Requests({onShiftChange, onSave}) {
                     : [...(prev.shifts[day] || []), shift] // Add shift
             };
 
-            // If removing "other" shift, clear the custom hours for that day
-            let updatedOtherShiftHours = { ...prev.otherShiftHours };
-            if (shift === 'other' && !updatedShifts[day].includes('other')) {
-                updatedOtherShiftHours[day] = null;
-            }
-
-            return new Shifts({ 
-                userId: prev.userId, 
-                shifts: updatedShifts,
-                otherShiftHours: updatedOtherShiftHours
-            });
+            return new Shifts({ shiftId: prev.shiftId, name: prev.name, shifts: updatedShifts });
         });
     };
 
