@@ -42,3 +42,19 @@ export async function fetchAllShifts() {
         return undefined;
     }
 }
+
+export async function addShift(shifts) {
+    try {
+        const response = await fetch(`${API_URL}/shifts/addShift`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(shifts)
+        });
+    }
+    catch (error) {
+        console.error('Error adding shift:', error);
+        return undefined;
+    }
+}

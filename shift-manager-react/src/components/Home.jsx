@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {loginPath, schedule, updateSchedule} from "../constants";
 import {ShiftsContext, UserContext} from "../App";
 import Cookies from 'js-cookie';
+import { addShift } from "../util/shifts_util";
 
 
 
@@ -40,9 +41,15 @@ function Home() {
 
     const handleReqSave = (shifts) => {
         console.log("saved shifts: ", shifts);
+        console.log("saved otherShiftHours: ", shifts?.otherShiftHours);
         alert("Saved: " + shifts);
         setShifts(shifts);
-        updateSchedule(schedule, shifts);
+        // updateSchedule(schedule, shifts);
+        addShift(shifts);
+
+        
+        // Save to cookies with custom hours
+        Cookies.set("shifts", JSON.stringify([shifts]));
     }
 
     const handleLogout = () => {
