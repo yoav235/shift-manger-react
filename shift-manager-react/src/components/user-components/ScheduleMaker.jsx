@@ -17,8 +17,7 @@ import {
 } from "@mui/material";
 import { daysArray, shiftsArray } from "../../constants";
 import { fetchAllShifts } from "../../util/shifts_util";
-import { fetchSchedule } from "../../util/schedule_util";
-import { createSchedule } from "../../util/schedule_post_util";
+import { fetchSchedule, createSchedule } from "../../util/schedule_util";
 
 // Build an empty grid shaped as schedule[day][shift] = []
 function makeEmptyGrid() {
