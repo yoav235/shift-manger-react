@@ -14,6 +14,9 @@ import {
     TableRow,
     Typography,
     Button,
+    Select,
+    FormControl,
+    InputLabel,
 } from "@mui/material";
 import { daysArray, shiftsArray } from "../../constants";
 import { fetchAllShifts } from "../../util/shifts_util";
@@ -79,6 +82,10 @@ function ScheduleMaker() {
 
     // Saving state
     const [saving, setSaving] = useState(false);
+
+    // Hourly schedule state
+    const [selectedWorker, setSelectedWorker] = useState("");
+    const hoursArray = Array.from({ length: 24 }, (_, i) => i); // 0-23 hours
 
     // Load available workers from backend
     useEffect(() => {
@@ -267,6 +274,67 @@ function ScheduleMaker() {
                     </MenuItem>
                 )}
             </Menu>
+
+            {/* Hourly Schedule Table */}
+            <Box sx={{ mt: 4 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                    <Typography variant="h5">Hourly Schedule</Typography>
+                    <FormControl sx={{ minWidth: 200 }}>
+                        <InputLabel id="worker-select-label">Select Worker</InputLabel>
+                        <Select
+                            labelId="worker-select-label"
+                            id="worker-select"
+                            value={selectedWorker}
+                            label="Select Worker"
+                            onChange={(e) => setSelectedWorker(e.target.value)}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {workers.map((name) => (
+                                <MenuItem key={name} value={name}>
+                                    {name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+
+                <TableContainer component={Paper}>
+                    <Table size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell sx={{ fontWeight: 700 }}>Hour</TableCell>
+                                {daysArray.map((day) => (
+                                    <TableCell key={day} align="center" sx={{ textTransform: "capitalize", fontWeight: 700 }}>
+                                        {day}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {hoursArray.map((hour) => (
+                                <TableRow key={hour} hover>
+                                    <TableCell sx={{ fontWeight: 600 }}>
+                                        {hour.toString().padStart(2, '0')}:00
+                                    </TableCell>
+                                    {daysArray.map((day) => (
+                                        <TableCell
+                                            key={`${day}-${hour}`}
+                                            align="center"
+                                            sx={{ minWidth: 100 }}
+                                        >
+                                            <Typography variant="body2" color="text.secondary">
+                                                -
+                                            </Typography>
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
         </Box>
     );
 }
