@@ -67,6 +67,59 @@ function normalizeToGrid(raw) {
     return grid;
 }
 
+// Helper function to check if an hour falls within a shift
+function isHourInShift(hour, shift) {
+    switch (shift) {
+        case "morning":
+            return hour >= 7 && hour < 15;
+        case "middle":
+            return hour >= 11 && hour < 19;
+        case "evening":
+            return hour >= 15 && hour < 23;
+        case "night":
+            return hour >= 23 || hour < 7;
+        default:
+            return false;
+    }
+}
+
+// Generate hourly schedule for a worker based on their assigned shifts
+function generateHourlySchedule(schedule, workerName) {
+    const hourlySchedule = {};
+    daysArray.forEach((day) => {
+        hourlySchedule[day] = new Array(24).fill(false);
+    });
+
+    daysArray.forEach((day, dayIndex) => {
+        shiftsArray.forEach((shift) => {
+            const workers = schedule?.[day]?.[shift] || [];
+            if (workers.includes(workerName)) {
+                if (shift === "night") {
+                    // Night shift: 23:00 on current day
+                    for (let hour = 23; hour < 24; hour++) {
+                        hourlySchedule[day][hour] = true;
+                    }
+                    // And 00:00 - 07:00 on next day
+                    const nextDayIndex = (dayIndex + 1) % daysArray.length;
+                    const nextDay = daysArray[nextDayIndex];
+                    for (let hour = 0; hour < 7; hour++) {
+                        hourlySchedule[nextDay][hour] = true;
+                    }
+                } else {
+                    // For other shifts, mark hours on the same day
+                    for (let hour = 0; hour < 24; hour++) {
+                        if (isHourInShift(hour, shift)) {
+                            hourlySchedule[day][hour] = true;
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    return hourlySchedule;
+}
+
 function ScheduleMaker() {
     // Local schedule state: { [day]: { [shift]: string[] } }
     const [schedule, setSchedule] = useState(() => makeEmptyGrid());
@@ -86,6 +139,14 @@ function ScheduleMaker() {
     // Hourly schedule state
     const [selectedWorker, setSelectedWorker] = useState("");
     const hoursArray = Array.from({ length: 24 }, (_, i) => i); // 0-23 hours
+
+    // Calculate hourly schedule for selected worker
+    const workerHourlySchedule = useMemo(() => {
+        if (!selectedWorker) {
+            return {};
+        }
+        return generateHourlySchedule(schedule, selectedWorker);
+    }, [selectedWorker, schedule]);
 
     // Load available workers from backend
     useEffect(() => {
@@ -318,17 +379,29 @@ function ScheduleMaker() {
                                     <TableCell sx={{ fontWeight: 600 }}>
                                         {hour.toString().padStart(2, '0')}:00
                                     </TableCell>
-                                    {daysArray.map((day) => (
-                                        <TableCell
-                                            key={`${day}-${hour}`}
-                                            align="center"
-                                            sx={{ minWidth: 100 }}
-                                        >
-                                            <Typography variant="body2" color="text.secondary">
-                                                -
-                                            </Typography>
-                                        </TableCell>
-                                    ))}
+                                    {daysArray.map((day) => {
+                                        const isWorking = selectedWorker && workerHourlySchedule?.[day]?.[hour];
+                                        return (
+                                            <TableCell
+                                                key={`${day}-${hour}`}
+                                                align="center"
+                                                sx={{ 
+                                                    minWidth: 100,
+                                                    bgcolor: isWorking ? 'primary.main' : 'transparent',
+                                                    padding: isWorking ? 2 : 1,
+                                                    transition: 'background-color 0.2s ease',
+                                                }}
+                                            >
+                                                {isWorking ? (
+                                                    <Box sx={{ width: '100%', height: 20 }} />
+                                                ) : (
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        -
+                                                    </Typography>
+                                                )}
+                                            </TableCell>
+                                        );
+                                    })}
                                 </TableRow>
                             ))}
                         </TableBody>
